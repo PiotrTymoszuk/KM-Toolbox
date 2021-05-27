@@ -338,11 +338,22 @@
       
       p_value <- signif(km_model_object$p_value, 2)
       
+      if(is.null(km_model_object$cutpoint)) {
+        
+        plot_subtitle <- NULL
+        
+      } else {
+        
+        plot_subtitle <- paste('Cutoff = ', signif(km_model_object$cutpoint, 2))
+        
+      }
+
+      
       output <- ggsurvplot(fit = fit, 
                            ggtheme = common_theme, 
                            pval = p_value, 
                            pval.size = 2.75, ...) + 
-        labs(subtitle = paste('Cutoff = ', signif(km_model_object$cutpoint, 2)), 
+        labs(subtitle = plot_subtitle, 
              tag = paste('Lo: n = ', 
                          km_model_object$stats$n[1], 
                          ', Hi: n = ', 
